@@ -1,0 +1,81 @@
+{{template "header"}}
+	<h1 id='questionText'>Question</h1>
+	<h2 id='answerText'></h2>
+	<button id='showAnswerButton'>Show answer</button>
+	<div id='ratingButtons' hidden>
+		<button id='badButton'>Bad</button>
+		<button id='neutralButton'>Neutral</button>
+		<button id='goodButton'>Good</button>
+	</div>
+	<div id='debugText'>
+		debug
+	</div>
+
+	<script>
+cards = {{.}}
+index = 0;
+
+function showAnswer() {
+	answerText.innerHTML = cards[index].answer
+	showAnswerButton.hidden = true;
+	ratingButtons.hidden = false;
+}
+function hideAnswer() {
+	answerText.innerHTML = "";
+	showAnswerButton.hidden = false;
+	ratingButtons.hidden = true;
+}
+function rate(i) {
+	id = cards[index]['id']
+	hideAnswer()
+	fetch(`/api/rate/${id}/${i}`)
+	.then( response => {
+		if (!response.ok) {
+			throw new Error("HTTP error: " + response.status);
+		}
+	})
+	.catch(error => {
+		console.error("Could not rate card: " + error);
+	})
+	.then( () => {
+		index += 1
+		if (index == cards.length) window.location.replace("/");
+		else nextQuestion();
+	})
+}
+
+function nextQuestion() {
+	questionText.innerHTML = cards[index]['question'];
+	id = cards[index]['id']
+	due = cards[index]['due']
+	interval = cards[index]['interval']
+	tags = cards[index]['tags']
+	debugText.innerHTML = `id=${id}, due=${due}, interval=${interval}, tags=${tags}, ${index+1}/${cards.length}`
+}
+
+// Start
+nextQuestion();
+
+showAnswerButton.onclick = showAnswer;
+badButton.onclick = () => rate(-1);
+neutralButton.onclick = () => rate(0);
+goodButton.onclick = () => rate(1);
+
+
+document.addEventListener("keyup", (event) => {
+	if (ratingButtons.hidden) {
+		if (event.key === "Enter") {
+			showAnswer();
+		}
+	}
+	else if (event.key === "1") {
+		rate(-1)
+	} else if (event.key === "2" || event.key === "Enter") {
+		rate(0)
+	} else if (event.key === "3") {
+		rate(1)
+	}
+});
+
+	</script>
+{{template "footer"}}

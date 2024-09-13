@@ -1,0 +1,19 @@
+{{template "header"}}
+	<h2>List of Decks</h2>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Days studied</th>
+			<th>Last session</th>
+			<th></th>
+		</tr>
+	{{range .}}
+		<tr>
+			<td>{{.Name}}</td>
+			<td>{{.Day}}</td>
+			<td>{{.Date}}</td>
+			<td><a href="/study/{{.Id}}"><button>Study now</button></a></td>
+		</tr>
+	{{end}}
+	</table>
+{{template "footer"}}

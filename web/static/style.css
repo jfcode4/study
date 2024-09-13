@@ -1,0 +1,76 @@
+body {
+	color: white;
+	background-color: #222;
+	text-align: center;
+}
+table {
+	margin: auto auto;
+}
+td {
+	padding: 0px 16px;
+}
+
+button {
+	background-color: #555;
+	/*width: 30%;*/
+	max-width: 300px;
+	color: white;
+	border: none;
+	padding: 16px 16px;
+}
+
+button:hover {
+	background-color: #666;
+}
+
+#questionText {
+	height: 100px;
+}
+
+#answerText {
+	margin: 0;
+	height: 100px;
+	color: #05b8ff;
+}
+
+#showAnswerButton {
+	width: 100%;
+	max-width: 900px;
+}
+
+#ratingButtons {
+	width: 100%;
+}
+
+#ratingButtons button {
+	width: 32%;
+}
+
+#badButton {
+	background-color: #900;
+}
+
+#badButton:hover {
+	background-color: #a00;
+}
+
+#neutralButton {
+	background-color: #38c;
+}
+
+#neutralButton:hover {
+	background-color: #59e;
+}
+
+#goodButton {
+	background-color: #090;
+}
+
+#goodButton:hover {
+	background-color: #0b0;
+}
+
+#debugText {
+	color: green;
+	margin-top: 50px;
+}
